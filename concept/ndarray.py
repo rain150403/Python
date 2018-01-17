@@ -12,12 +12,12 @@ ndarray对象是用于存放同类型元素的多维数组，是numpy中的基�
 
 标题中的函数就是numpy的构造函数，我们可以使用这个函数创建一个ndarray对象。构造函数有如下几个可选参数：
 
-参数			类型				作用
-shape		int型tuple		多维数组的形状
-dtype		data-type		数组中元素的类型
-buffer						用于初始化数组的buffer
-offset		int				buffer中用于初始化数组的首个数据的偏移
-strides		int型tuple		每个轴的下标增加1时，数据指针在内存中增加的字节数
+参数		类型			作用
+shape		int型tuple            多维数组的形状
+dtype		data-type             数组中元素的类型
+buffer					 用于初始化数组的buffer
+offset		int			 buffer中用于初始化数组的首个数据的偏移
+strides	int型tuple	       每个轴的下标增加1时，数据指针在内存中增加的字节数
 order		‘C’ 或者 ‘F’		‘C’:行优先；’F’:列优先
 
 
@@ -147,7 +147,7 @@ array([[0, 0, 0],
 除了上述几个用于创建数组的函数，还有如下几个特殊的函数：
 
 函数名		用途
-eye			生成对角线全1，其余位置全是0的二维数组
+eye		生成对角线全1，其余位置全是0的二维数组
 identity	生成单位矩阵
 full		生成由固定值填充的数组
 full_like	生成由固定值填充的、形状与给定数组相同的数组
@@ -466,9 +466,9 @@ repeat, reshape, round, searchsorted, sort, squeeze, std, sum, swapaxes, take, t
 ndarray.item(*args)			复制数组中的一个元素，并返回
 ndarray.tolist()			将数组转换成python标准list
 ndarray.itemset(*args)		修改数组中某个元素的值
-ndarray.tostring([order])	构建一个包含ndarray的原始字节数据的字节字符串
-ndarray.tobytes([order])	功能同tostring
-ndarray.byteswap(inplace)	将ndarray中每个元素中的字节进行大小端转换
+ndarray.tostring([order])	       构建一个包含ndarray的原始字节数据的字节字符串
+ndarray.tobytes([order])	       功能同tostring
+ndarray.byteswap(inplace)	       将ndarray中每个元素中的字节进行大小端转换
 ndarray.copy([order])		复制数组并返回（深拷贝）
 ndarray.fill(value)			使用值value填充数组
 
@@ -545,12 +545,12 @@ array([[ 792633534417207296,   72057594037927936,                   0,
 
 常用方法									功能
 ndarray.reshape(shape[,order])			返回一个具有相同数据域，但shape不一样的视图
-ndarray.resize(new_shape[,orefcheck])	原地修改数组的形状（需要保持元素个数前后相同）
+ndarray.resize(new_shape[,orefcheck])	       原地修改数组的形状（需要保持元素个数前后相同）
 ndarray.transpose(*axes)				返回数组针对某一轴进行转置的视图
 ndarray.swapaxes(axis1, asix2)			返回数组axis1轴与axis2轴互换的视图
 ndarray.flatten([order])				返回将原数组压缩成一维数组的拷贝（全新的数组）
-ndarray.ravel([order])					返回将原数组压缩成一维数组的视图
-ndarray.squeeze([axis])					返回将原数组中的shape中axis==1的轴移除之后的视图
+ndarray.ravel([order])				返回将原数组压缩成一维数组的视图
+ndarray.squeeze([axis])				返回将原数组中的shape中axis==1的轴移除之后的视图
 
 注意事项！！！ 
 上述方法中，除resize、flatten外其他的方法返回的都是原数组修改shape或者axes之后的视图，也就是说，
@@ -734,24 +734,24 @@ array([[12, 15, 18, 21],
 array([[ 6, 22, 38],
        [54, 70, 86]])
 
-常用方法														功能
-ndarray.max([axis, out, keepdims])							返回根据指定的axis计算最大值
-ndarray.argmax([axis, out])									返回根据指定axis计算最大值的索引
-ndarray.min([axis, out, keepdims])							返回根据指定的axis计算最小值
-ndarray.argmin([axis, out])									返回根据指定axis计算最小值的索引
-ndarray.ptp([axis, out])									返回根据指定axis计算最大值与最小值的差
-ndarray.clip([min, max, out])								返回数组元素限制在[min, max]之间的新数组（小于min的转为min，大于max的转为max）
-ndarray.round([decimals, out])								返回指定精度的数组（四舍五入）
-ndarray.trace([offset, axis1, axis2, dtype, out])			返回数组的迹（对角线元素的和）
-ndarray.sum([axis, dtype, out, keepdims])					根据指定axis计算数组的和，默认求所有元素的和
-ndarray.cumsum([axis, dtype, out])							根据指定axis计算数组的累积和
-ndarray.mean([axis, dtype, out, keepdims])					根据指定axis计算数组的平均值
-ndarray.var([axis, dtype, out, ddof, keepdims])				根据指定的axis计算数组的方差
-ndarray.std([axis, dtype, out, ddof, keepdims])				根据指定axis计算数组的标准差
-ndarray.prod([axis, dtype, out, keepdims])					根据指定axis计算数组的积
-ndarray.cumprod([axis, dtype, out])							根据指定axis计算数据的累计积
-ndarray.all([axis, dtype, out])								根据指定axis判断所有元素是否全部为真
-ndarray.any([axis, out, keepdims])							根据指定axis判断是否有元素为真
+常用方法								功能
+ndarray.max([axis, out, keepdims])				返回根据指定的axis计算最大值
+ndarray.argmax([axis, out])					返回根据指定axis计算最大值的索引
+ndarray.min([axis, out, keepdims])				返回根据指定的axis计算最小值
+ndarray.argmin([axis, out])					返回根据指定axis计算最小值的索引
+ndarray.ptp([axis, out])					返回根据指定axis计算最大值与最小值的差
+ndarray.clip([min, max, out])				返回数组元素限制在[min, max]之间的新数组（小于min的转为min，大于max的转为max）
+ndarray.round([decimals, out])				返回指定精度的数组（四舍五入）
+ndarray.trace([offset, axis1, axis2, dtype, out])	返回数组的迹（对角线元素的和）
+ndarray.sum([axis, dtype, out, keepdims])			根据指定axis计算数组的和，默认求所有元素的和
+ndarray.cumsum([axis, dtype, out])				根据指定axis计算数组的累积和
+ndarray.mean([axis, dtype, out, keepdims])		根据指定axis计算数组的平均值
+ndarray.var([axis, dtype, out, ddof, keepdims])		根据指定的axis计算数组的方差
+ndarray.std([axis, dtype, out, ddof, keepdims])		根据指定axis计算数组的标准差
+ndarray.prod([axis, dtype, out, keepdims])		根据指定axis计算数组的积
+ndarray.cumprod([axis, dtype, out])			根据指定axis计算数据的累计积
+ndarray.all([axis, dtype, out])				根据指定axis判断所有元素是否全部为真
+ndarray.any([axis, out, keepdims])				根据指定axis判断是否有元素为真
 
 >>> a
 array([[2, 3, 4, 9],
@@ -806,16 +806,16 @@ array([    1,     2,     6,    24,   120,   720,  5040, 40320])
 
 4 选择元素以及操作
 
-常用方法												方法功能
+常用方法									方法功能
 ndarray.take(indices[, axis, out, model])			从原数组中根据指定的索引获取对应元素，并构成一个新的数组返回
-ndarray.put(indices, values[, mode])				将数组中indices指定的位置设置为values中对应的元素值
-ndarray.repeat(repeats[, axis])						根据指定的axis重复数组中的元素
-ndarray.sort([axis, kind, order])					原地对数组元素进行排序
-ndarray.argsort([axis, kind, order])				返回对数组进行升序排序之后的索引
-ndarray.partition(kth[, axis, kind, order])			将数组重新排列，所有小于kth的值在kth的左侧，所有大于或等于kth的值在kth的右侧
+ndarray.put(indices, values[, mode])			将数组中indices指定的位置设置为values中对应的元素值
+ndarray.repeat(repeats[, axis])				根据指定的axis重复数组中的元素
+ndarray.sort([axis, kind, order])				原地对数组元素进行排序
+ndarray.argsort([axis, kind, order])			返回对数组进行升序排序之后的索引
+ndarray.partition(kth[, axis, kind, order])		将数组重新排列，所有小于kth的值在kth的左侧，所有大于或等于kth的值在kth的右侧
 ndarray.argpartition(kth[, axis, kind, order])		对数组执行partition之后的元素索引
-ndarray.searchsorted(v[, side, sorter])				若将v插入到当前有序的数组中，返回插入的位置索引
-ndarray.nonzero()									返回数组中非零元素的索引
+ndarray.searchsorted(v[, side, sorter])			若将v插入到当前有序的数组中，返回插入的位置索引
+ndarray.nonzero()						返回数组中非零元素的索引
 ndarray.diagonal([offset, axis1, axis2])			返回指定的对角线
 
 >>> a
@@ -908,3 +908,58 @@ array([[0, 1],
 >>> a[1,:,:]
 array([[4, 5],
        [6, 7]])
+
+##################################################
+numpy的基本属性：
+
+NumPy的主要对象是同种元素的多维数组。这是一个所有的元素都是一种类型、通过一个正整数元组索引的元素表格(通常是元素是数字)。
+在NumPy中维度(dimensions)叫做轴(axes)，轴的个数叫做秩(rank)。
+
+     Numpy中提供的核心对象 array
+
+NumPy的数组类被称作 ndarray 。通常被称作数组。注意 numpy.array 和标准Python库类 array.array 并不相同，后者只处理一维数组和提供少量功能。
+更多重要ndarray对象属性有：
+
+1. ndarray.ndim
+
+数组轴的个数，在python的世界中，轴的个数被称作秩
+
+2. ndarray.shape
+
+数组的维度。这是一个指示数组在每个维度上大小的整数元组。例如一个n排m列的矩阵，它的shape属性将是(2,3),这个元组的长度显然是秩，即维度或者ndim属性
+
+3. ndarray.size
+
+数组元素的总个数，等于shape属性中元组元素的乘积。
+
+4. ndarray.dtype
+
+一个用来描述数组中元素类型的对象，可以通过创造或指定dtype使用标准Python类型。另外NumPy提供它自己的数据类型。
+
+     提供的dtype类型：  
+bool_	Boolean (True or False) stored as a byte
+int_	Default integer type (same as C long; normally either int64 or int32)
+intc	Identical to C int (normally int32 or int64)
+intp	Integer used for indexing (same as C ssize_t; normally either int32 or int64)
+int8	Byte (-128 to 127)
+int16	Integer (-32768 to 32767)
+int32	Integer (-2147483648 to 2147483647)
+int64	Integer (-9223372036854775808 to 9223372036854775807)
+uint8	Unsigned integer (0 to 255)
+uint16	Unsigned integer (0 to 65535)
+uint32	Unsigned integer (0 to 4294967295)
+uint64	Unsigned integer (0 to 18446744073709551615)
+float_	Shorthand for float64.
+float16	Half precision float: sign bit, 5 bits exponent, 10 bits mantissa
+float32	Single precision float: sign bit, 8 bits exponent, 23 bits mantissa
+float64	Double precision float: sign bit, 11 bits exponent, 52 bits mantissa
+complex_	Shorthand for complex128.
+complex64	Complex number, represented by two 32-bit floats (real and imaginary components)
+complex128	Complex number, represented by two 64-bit floats (real and imaginary components)
+ndarray.itemsize
+
+数组中每个元素的字节大小。例如，一个元素类型为float64的数组itemsiz属性值为8(=64/8),又如，一个元素类型为complex32的数组item属性为4(=32/8).
+
+5. ndarray.data
+
+包含实际数组元素的缓冲区，通常我们不需要使用这个属性，因为我们总是通过索引来使用数组中的元素。
