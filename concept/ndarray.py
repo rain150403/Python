@@ -963,3 +963,242 @@ ndarray.itemsize
 5. ndarray.data
 
 包含实际数组元素的缓冲区，通常我们不需要使用这个属性，因为我们总是通过索引来使用数组中的元素。
+
+
+
+################################################################################################
+这一节简要介绍ndarray和func————
+
+numpy基础——from——《利用Python进行数据分析》
+
+Numpy简介
+
+Numpy（Numerical Python的简称）是高性能科学计算和数据分析的基础包。其部分功能如下：
+
+①ndarray，一个具有矢量算术运算和复杂广播能力的快速且节省空间的多维数组。
+
+②用于对整组数据进行快速运算的标准数学函数（无需编写循环）。
+
+③用于读写磁盘数据的工具以及用于操作内存映射文件的工具。
+
+④线性代数、随机数生成以及傅里叶变换功能。
+
+⑤用于集成由C、C++、Fortran等语言编写的代码的工具。
+
+一、NumPy的ndarray：一种多维数组对象
+
+每个数组都有一个shape（一个表示各维度大小的元组）和一个dtype（一个用于说明数组数据类型的对象）
+
+1、创建ndarray
+
+import numpy as np
+data1 = [6,7.5,8,0,1]  #创建列表
+arr1 = np.array(data1) #转换为数组
+print(arr1) 
+print(arr1.dtype) #数据类型保存在dtype对象中
+data2 = [[1,2,3,4],[5,6,7,8]] #创建嵌套序列（由等长列表组成的列表）
+arr2 = np.array(data2) #转换为多维数组
+print(arr2)
+print(arr1.dtype)
+print(arr1.shape)
+
+除np.array之外，还有一些函数也可以新建数组。比如，zeros和ones分别可以创建指定长度或形状的全0或全1数组。
+empty可以创建一个没有任何具体值的数组。要用这些方法创建多维数组，只需传入一个表示形状的元组即可：
+
+print(np.zeros(10)) #创建指定长度(10)的全0数组
+print(np.ones((2,4)) #创建指定长度的(2行4列二维)的全1数组 ，要注意，这里是两个括号！！！
+print(np.empty((2, 3, 2)))
+ 
+
+第一个参数表示数组的维度
+
+注意：认为np.empty会返回全0数组的想法是不安全的。很多情况下（如前所示），它返回的都是一些未初始化的垃圾值。***arange是Python内置函数range的数组版***：
+
+range(10) #创建指定数量的顺序列表（内置函数,默认0开始）
+print(np.arange(15)) #创建指定数量的顺序数组
+arr1=np.array([1,2,3],dtype=np.float64)    #创建特定数据类型的数组
+数组创建函数：
+
+
+
+2、ndarray的数据类型
+dtype（数据类型）是一个特殊的对象，它含有ndarray将一块内存解释为特定数据类型所需的信息。
+
+dtype是NumPy如此强大和灵活的原因之一。多数情况下，它们直接映射到相应的机器表示，这使得“读写磁盘上的二进制数据流”
+以及“集成低级语言代码（如C、Fortran）”等工作变得更加简单。
+数值型dtype的命名方式相同：一个类型名（如float或int），后面跟一个用于表示各元素位长的数字。
+标准的双精度浮点值（即Python中的float对象）需要占用8字节（即64位）。因此，该类型在NumPy中就记作float64。下图列示了NumPy所支持的全部数据类型。
+
+
+
+注意：记不住这些NumPy的dtype也没关系，新手更是如此。通常只需要知道你所处理的数据的大致类型是浮点数、复数、整数、布尔值、字符串，还是普通的Python对象即可。
+***当你需要控制数据在内存和磁盘中的存储方式时（尤其是对大数据集），那就得了解如何控制存储类型。***
+
+转换数据类型
+
+可以通过ndarray的astype方法显式地转换其dtype。
+
+arr = np.array([1,2,3,4,5])
+print(arr.dtype)
+float_arr = arr.astype(np.float32)
+print(float_arr.dtype)
+注意：浮点数（比如float64和float32）只能表示近似的分数值。在复杂计算中，由于可能会积累一些浮点错误，因此比较操作只能在一定小数位以内有效。
+
+3、数组和标量之间的运算
+
+数组很重要，因为它使你不用编写循环即可对数据执行批量运算。这通常就叫做矢量化（vectorization）。***大小相等的数组之间的任何算术运算都会将运算应用到元素级。***
+
+arr=np.array([[1.,2.,3.],[4.,5.,6.]])    #创建二维数组  
+arr*arr    #行列号相同的数组元素间运算  
+arr-arr  
+1/arr  
+arr*0.5  
+
+4、基本的索引和切片
+
+从表面上看，它们跟Python列表的功能差不多，跟列表最重要的区别在于，数组切片是原始数组的视图。这意味着数据不会被复制，视图上的任何修改都会直接反映到源数组上：
+
+arr=np.arange(10)  
+arr[5]    #索引第6个元素  
+arr[5:8]    #索引第6到第9个元素作为数组  
+arr[5:8]=12    #令第6到第9个元素等于12  
+arr_slice=arr[5:8]    #数组切片是原始数据的视图，视图上的任何修改都会反映到原数组  
+arr_slice[:]=64    #将数组切片的全部元素改为64  
+arr[5:8].copy()    #得到数组切片的一份副本  
+arr2d=np.array([[1,2,3],[4,5,6],[7,8,9]])  
+arr2d[2]    #索引二维数组第3行  
+arr2d[0][2]  arr2d[0,2]    #等价索引1行3列元素  
+arr2d[:2]    #索引第1行和第2行（不含第3行）  
+arr2d[:,:1]    #索引第1列  
+arr2d[:-2]    #使用负数索引将从尾部开始选取行 
+
+二维数组的索引方式
+
+5、切片索引
+
+ndarray的切片语法跟Python列表这样的一维对象差不多
+
+可以一次性传入多个切片，就像传入多个索引那样。
+
+6、布尔型索引
+
+names = np.array(['Bob','Joe','Will','Bob','Will','Joe','Joe'])
+names =='Bob' 
+#array([ True, False, False,  True, False, False, False], dtype=bool)
+data = np.random.randn(7,4)
+data[names=='Bob']
+data[names=='Bob',2:] #布尔型数组的长度必须跟被索引的轴长度一致
+names !='Bob' #不等于
+data[-(names=='Bob')] #负号(-)对条件进行否定
+#Python关键字and和or在布尔型数组中无效。
+
+通过布尔型数组设置值是一种经常用到的手段。为了将data中的所有负值都设置为0，我们可以这样：
+
+data[data < 0] = 0
+
+7、花式索引
+
+指的是利用整数数组进行索引,以特定的顺序选取子行。
+
+arr = np.empty((8,4))
+for i in range(8):
+    arr[i] = i
+arr[[2,3,0]] #以特定顺序选取行子集，传入整数列表或ndarray
+如果想要选出的是矩形区域，有两种方法，一种是data[[1,3]][:,[1,3]]，相当于先在轴0做一次索引，然后再在轴1做一次索引。
+另一种是用np.ix_函数将两个一维数组转化成选取矩形的索引器:data[np.ix_([1,3],[1,3])]。
+
+用np.ix_函数，它可以将两个一维整数数组转换为一个用于选取方形区域的索引器。
+
+8、数组转置和轴对换
+
+转置（transpose）是重塑的一种特殊形式，它返回的是源数据的视图（不会进行任何复制操作）。数组不仅有transpose方法，还有一个特殊的T属性。
+
+ 
+
+二、通用函数：快速的元素级数组函数
+通用函数（即ufunc）是一种对ndarray中的数据执行元素级运算的函数。你可以将其看做简单函数（接受一个或多个标量值，并产生一个或多个标量值）的矢量化包装器。
+
+
+
+import numpy as np
+arr=np.arange(10)  
+np.sqrt(arr)    #计算各元素的平方根（arr**0.5）  
+exp  #计算各元素指数ex;  abs  #绝对值;  
+np.add(x,y)  #x、y数组中对应元素相加;  subtract #相减;  multiply #相乘;  divide #相除;  
+1、利用数组进行数据处理
+
+用数组表达式代替循环的做法，通常被称为矢量化。
+
+import numpy as np
+points = np.arange(-5, 5, 0.01)
+xs, ys = np.meshgrid(points,points)
+z = np.sqrt(xs **2 + ys **2)
+print(z)
+2、将条件逻辑表述为数组运算
+
+numpy.where函数是三元表达式x if condition else y的矢量化版本。
+
+如：
+
+import numpy as np
+xarr = np.array([1.1,1.2,1.3,1.4,1.5])
+yarr = np.array([2.1,2.2,2.3,2.4,2.5])
+cond = np.array([True,False,True,True,False])
+假设我们想要根据cond中的值选取xarr和yarr的值：当cond中的值为True时，选取xarr的值，否则从yarr中选取。列表推导式的写法应该如下所示：
+
+ 
+
+使用np.where
+
+import numpy as np
+xarr=np.array([1.1,1.2,1.3,1.4,1.5])    #两个数值数组  
+yarr=np.array([2.1,2.2,2.3,2.4,2.5])  
+cond=np.array([True,False,True,True,False])    #一个布尔数组  
+result=np.where(cond,xarr,yarr)    #三元表达式  
+3、数学和统计方法
+可以通过数组上的一组数学函数对整个数组或某个轴向的数据进行统计计算。sum、mean以及标准差std等聚合计算（aggregation，通常叫做约简（reduction））既可以当做数组的实例方法调用，也可以当做顶级NumPy函数使用：
+
+arr=np.random.randn(5,4)  
+arr.mean();  np.mean(arr);  arr.sum();  
+arr.mean(axis=1)    #计算该轴上的统计值（0为列，1为行）  
+4、用于布尔型数组的方法
+
+布尔值会被强制转换为1（True）和0（False）。因此，sum经常被用来对布尔型数组中的True值计数：
+
+arr=randn(100)  
+(arr>0).sum()    #正值的数量  
+bools.any()    #用于测试数组中是否存在一个或多个True  
+bools.all()    #用于测试数组中所有值是否都是True   
+5、排序
+
+跟Python内置的列表类型一样，NumPy数组也可以通过sort方法就地排序：
+
+arr=randn(8)  
+arr.sort()  
+arr=randn(5,3)  
+arr.sort(0)  #二维数组按列排序;  arr.sort(1)  #二维数组按行排序
+6、唯一化
+
+ints=np.array([3,3,3,2,2,1,1,4,4])  
+np.unique(names)    #找出数组中的唯一值并返回已排序的结果
+
+
+7、用于数组的文件输入输出
+
+Numpy能够读写磁盘上的文本数据或二进制数据。
+
+arr=np.arange(10)  
+np.save('some_array',arr)  #数组以未压缩的原始二进制格式保存在.npy文件中  
+np.load('some_array')  #通过np.load读取磁盘上的数组  
+np.savez('array_archive.npz',a=arr,b=arr)  #将多个数组以保存在一个压缩文件中  
+a=np.arange(0,12,0.5).reshape(4,-1)  
+np.savetxt(r'E:\\knakan\\a.txt',a)  #缺省按照’%.18e’格式保存数据，以空格分隔  
+np.loadtxt(r'E:\\kankan\\a.txt')
+np.savetxt(r'\kankan\\a.txt',a,fmt="%d"delimiter=",")  #改为保存为整数，以逗号分隔  
+np.loadtxt(r'E:\\kankan\\a.txt',delimiter=",")  #读入时也需指定逗号分隔  
+
+8、 线性代数
+
+x=np.array([[1.,2.,3.],[4.,5.,6.]])  
+y=np.array([[6.,23.],[-1,7],[8,9]])  
+x.dot(y)  #矩阵乘法，相当于np.dot(x,y)   
